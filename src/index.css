@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@theme {
+  --color-lol-gold: #C89B3C;
+  --color-lol-gold-light: #F0E6D2;
+  --color-lol-gold-dark: #A0783C;
+  --color-lol-blue: #0F2027;
+  --color-lol-blue-light: #1E232E;
+  --color-lol-blue-dark: #010A13;
+  --color-lol-blue-accent: #005A82;
+  --color-lol-blue-bright: #0596AA;
+  --color-lol-gray-dark: #3C3C41;
+  --color-lol-gray-medium: #5BC0DE;
+  --color-lol-gray-light: #A09B8C;
+  --color-lol-magic: #7B68EE;
+  --color-lol-magic-dark: #463AAA;
+}
+
+@layer base {
+  :root {
+    --background: 210 40% 2%;
+    --foreground: 39 22% 85%;
+    --card: 210 40% 6%;
+    --card-foreground: 39 22% 85%;
+    --popover: 210 40% 6%;
+    --popover-foreground: 39 22% 85%;
+    --primary: 39 100% 50%;
+    --primary-foreground: 210 40% 2%;
+    --secondary: 210 40% 10%;
+    --secondary-foreground: 39 22% 85%;
+    --muted: 210 40% 10%;
+    --muted-foreground: 39 22% 65%;
+    --accent: 210 40% 15%;
+    --accent-foreground: 39 22% 85%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 39 22% 85%;
+    --border: 210 40% 15%;
+    --input: 210 40% 15%;
+    --ring: 39 100% 50%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
