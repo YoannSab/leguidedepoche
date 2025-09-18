@@ -12,7 +12,6 @@ export function ChampionDetail() {
   const [champion, setChampion] = useState<Champion | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [autoplay, setAutoplay] = useState(false);
 
   useEffect(() => {
     const loadChampion = async () => {

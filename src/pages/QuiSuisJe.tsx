@@ -1,4 +1,7 @@
-import { ExternalLink, Trophy, Gamepad2, Tv } from 'lucide-react';
+import { ExternalLink, Trophy } from 'lucide-react';
+import { FaInstagram, FaYoutube, FaTiktok, FaTwitch, FaTwitter, FaDiscord } from "react-icons/fa";
+import { SiLeagueoflegends } from "react-icons/si";
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import bibouImage from '@/assets/bibou_lol.jpg';
@@ -6,23 +9,41 @@ import bibouImage from '@/assets/bibou_lol.jpg';
 export function QuiSuisJe() {
   const links = [
     {
-      name: 'LoL Fandom Wiki',
-      url: 'https://lol.fandom.com/wiki/Bibou',
-      icon: Trophy,
-      description: 'Mon profil sur LoL Fandom'
-    },
-    {
       name: 'Twitch',
       url: 'https://www.twitch.tv/bibou_lol',
-      icon: Tv,
+      icon: FaTwitch,
       description: 'Mes streams en direct'
+    },
+    {
+      name: 'Discord',
+      url: 'https://discord.gg/tNYtajvWQU',
+      icon: FaDiscord,
+      description: 'Rejoignez la communauté'
     },
     {
       name: 'Twitter/X',
       url: 'https://x.com/Bibou_euw',
-      icon: ExternalLink,
+      icon: FaTwitter,
       description: 'Suivez-moi sur X'
-    }
+    },
+    {
+      name: 'Tiktok',
+      url: 'https://www.tiktok.com/@bibou_lol',
+      icon: FaTiktok,
+      description: 'Mes shorts'
+    }, 
+    {
+      name: 'YouTube',
+      url: 'https://www.youtube.com/channel/UChVkro0nlEK2_DtJdGq19yw',
+      icon: FaYoutube,
+      description: 'Mes vidéos et guides'
+    },
+    {
+      name: 'Instagram',
+      url: 'https://www.instagram.com/bibou_lol1/',
+      icon: FaInstagram,
+      description: 'Mes shorts'
+    },
   ];
 
   return (
@@ -54,8 +75,7 @@ export function QuiSuisJe() {
             <div className="space-y-6">
               <Card className="bg-lol-blue-dark/50 border-lol-gold/20">
                 <CardHeader>
-                  <CardTitle className="text-lol-gold flex items-center gap-2">
-                    <Trophy className="w-5 h-5" />
+                  <CardTitle className="text-lol-gold flex items-center gap-2 text-2xl">
                     Bibou
                   </CardTitle>
                   <CardDescription className="text-lol-gray-light">
@@ -67,23 +87,20 @@ export function QuiSuisJe() {
                     <Trophy className="w-5 h-5 text-lol-gold mt-0.5 flex-shrink-0" />
                     <div>
                       <p className="font-semibold text-lol-gold">Challenger ADC</p>
-                      <p className="text-sm">Rang le plus élevé de League of Legends</p>
                     </div>
                   </div>
                   
                   <div className="flex items-start gap-3">
-                    <Gamepad2 className="w-5 h-5 text-lol-gold mt-0.5 flex-shrink-0" />
+                    <SiLeagueoflegends className="w-5 h-5 text-lol-gold mt-0.5 flex-shrink-0" />
                     <div>
                       <p className="font-semibold text-lol-gold">3 ans en professionnel</p>
-                      <p className="text-sm">Expérience en équipe professionnelle</p>
                     </div>
                   </div>
                   
                   <div className="flex items-start gap-3">
-                    <Tv className="w-5 h-5 text-lol-gold mt-0.5 flex-shrink-0" />
+                    <FaTwitch className="w-5 h-5 text-lol-gold mt-0.5 flex-shrink-0" />
                     <div>
                       <p className="font-semibold text-lol-gold">Streamer LoL</p>
-                      <p className="text-sm">Partage de l'expertise et du divertissement</p>
                     </div>
                   </div>
                 </CardContent>
@@ -98,18 +115,16 @@ export function QuiSuisJe() {
             </CardHeader>
             <CardContent className="text-lol-gray-light">
               <p className="leading-relaxed mb-4">
-                Salut ! Je suis Bibou, un joueur passionné de League of Legends avec une expérience 
-                de 3 ans en tant que joueur professionnel. Spécialisé dans le rôle ADC (Attack Damage Carry), 
-                j'ai atteint le rang Challenger, le plus haut niveau du jeu.
+                J'ai 23 ans, j'ai fait mes études à l'ESSEC et l'emlyon et je tente de devenir streamer fulltime.
+                J'ai été joueur pro 3 ans, après avoir gagné le MNT et les UP&DOWN pour la div 2 j'y ai joué 1 an. Après j'ai fait 1 split de division 1 d'AL et maintenant je stream après le travail !
+                Peak à 1350 LP, main Kai'sa, Smolder et Aphelios.
               </p>
               <p className="leading-relaxed mb-4">
-                Après ma carrière professionnelle, je me consacre maintenant au streaming et au partage 
-                de mes connaissances avec la communauté. Le Guide de Poche est né de ma volonté d'aider 
-                les joueurs à mieux comprendre les champions et à améliorer leur gameplay.
+                Le Guide de Poche est né de ma volonté d'aider les joueurs à mieux comprendre les champions et à améliorer leur gameplay. Que vous soyez débutant ou joueur expérimenté, j'espère que ce guide vous aidera à progresser !
+                à progresser !
               </p>
               <p className="leading-relaxed">
-                Que vous soyez débutant ou joueur expérimenté, j'espère que ce guide vous aidera 
-                à progresser et à prendre encore plus de plaisir dans vos parties !
+                
               </p>
             </CardContent>
           </Card>

@@ -51,14 +51,7 @@ export function Home() {
             championList.sort((a, b) => a.name.localeCompare(b.name));
             setFilteredChampions(championList);
         } catch (err) {
-            console.error('Erreur lors de la recherche:', err);
-            // En cas d'erreur, on filtre localement
-            const filtered = champions.filter(champion =>
-                champion.name.toLowerCase().includes(query.toLowerCase()) ||
-                champion.title.toLowerCase().includes(query.toLowerCase()) ||
-                champion.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
-            );
-            setFilteredChampions(filtered);
+            setError(err instanceof Error ? err.message : 'Une erreur est survenue lors de la recherche');
         }
     }, [champions]);
 

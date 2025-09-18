@@ -52,11 +52,16 @@ class ChampionService {
       return allChampions;
     }
 
+    const normalizeString = (str: string) => 
+      str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+    const normalizedQuery = normalizeString(query);
+
     const filteredData = Object.entries(allChampions.data)
       .filter(([_, champion]) => 
-        champion.name.toLowerCase().includes(query.toLowerCase()) ||
-        champion.title.toLowerCase().includes(query.toLowerCase()) ||
-        champion.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
+        normalizeString(champion.name).includes(normalizedQuery) ||
+        normalizeString(champion.title).includes(normalizedQuery) ||
+        champion.tags.some(tag => normalizeString(tag).includes(normalizedQuery))
       )
       .reduce((acc, [key, champion]) => {
         acc[key] = champion;
