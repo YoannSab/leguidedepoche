@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Champion } from '@/types/champion';
 import { ChampionCard } from '@/components/ChampionCard';
 import { Loader2, AlertCircle } from 'lucide-react';
+import tips from '@/data/tips';
 
 interface ChampionGridProps {
   champions: Champion[];
@@ -84,13 +85,17 @@ export function ChampionGrid({
     <div className="w-full -mt-10">
       {/* Grille des champions */}
       <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-4 lg:gap-6">
-        {visibleChampions.map((champion) => (
-          <ChampionCard
-            key={champion.id}
-            champion={champion}
-            onClick={onChampionClick}
-          />
-        ))}
+        {visibleChampions.map((champion) => {
+          const hasTips = tips[champion.name as keyof typeof tips] !== undefined;
+          return (
+            <ChampionCard
+              key={champion.id}
+              champion={champion}
+              onClick={onChampionClick}
+              hasTips={hasTips}
+            />
+          );
+        })}
       </div>
 
       {/* Bouton charger plus (si nécessaire) */}
