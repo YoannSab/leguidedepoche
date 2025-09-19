@@ -18,34 +18,12 @@ export function ChampionGrid({
   onChampionClick 
 }: ChampionGridProps) {
   const [visibleChampions, setVisibleChampions] = useState<Champion[]>([]);
-  const [displayCount, setDisplayCount] = useState(24); // Nombre initial de champions à afficher
 
   // Pagination virtuelle pour les performances
   useEffect(() => {
-    setVisibleChampions(champions.slice(0, displayCount));
-  }, [champions, displayCount]);
+    setVisibleChampions(champions);
+  }, [champions]);
 
-  // Fonction pour charger plus de champions
-  const loadMore = () => {
-    setDisplayCount(prev => Math.min(prev + 24, champions.length));
-  };
-
-  // Gestion du scroll infini
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop
-        >= document.documentElement.offsetHeight - 1000
-      ) {
-        if (displayCount < champions.length) {
-          loadMore();
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [displayCount, champions.length]);
 
   if (loading) {
     return (
@@ -66,21 +44,7 @@ export function ChampionGrid({
       </div>
     );
   }
-
-  if (champions.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center py-16 space-y-4">
-        <div className="text-6xl">🔍</div>
-        <p className="text-lol-gray-light text-center">
-          Aucun champion trouvé
-        </p>
-        <p className="text-lol-gray-light text-sm text-center max-w-md">
-          Essayez de modifier votre recherche ou vérifiez l'orthographe
-        </p>
-      </div>
-    );
-  }
-
+  
   return (
     <div className="w-full -mt-10">
       {/* Grille des champions */}
@@ -97,27 +61,6 @@ export function ChampionGrid({
           );
         })}
       </div>
-
-      {/* Bouton charger plus (si nécessaire) */}
-      {displayCount < champions.length && (
-        <div className="flex justify-center mt-8">
-          <button
-            onClick={loadMore}
-            className="px-6 py-3 bg-gradient-to-r from-lol-gold to-lol-gold-dark text-lol-blue font-semibold rounded-lg hover:from-lol-gold-light hover:to-lol-gold transition-all duration-300 transform hover:scale-105"
-          >
-            Charger plus de champions ({champions.length - displayCount} restants)
-          </button>
-        </div>
-      )}
-
-      {/* Indicateur de fin */}
-      {displayCount >= champions.length && champions.length > 24 && (
-        <div className="flex justify-center mt-8 py-4">
-          <p className="text-lol-gray-light text-sm">
-            Tous les champions ont été chargés
-          </p>
-        </div>
-      )}
     </div>
   );
 }

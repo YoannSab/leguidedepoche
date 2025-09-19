@@ -1,15 +1,20 @@
 import { useParams, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Champion } from '@/types/champion';
+import { Champion, DetailedChampion, getChampionIconUrl } from '@/types/champion';
 import { championService } from '@/services/championService';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Play, Star, Shield, Sword, Target } from 'lucide-react';
+import { ChampionStats } from '@/components/ChampionStats';
+import { ChampionSpells } from '@/components/ChampionSpells';
+import { ItemIcon } from '@/components/ItemIcon';
+import { TipsTextWithItems } from '@/components/TipsTextWithItems';
+import { ArrowLeft, Play, Star, Shield, Sword, Target, BookOpen } from 'lucide-react';
 import tips from '@/data/tips';
 
 export function ChampionDetail() {
   const { championId } = useParams<{ championId: string }>();
   const [champion, setChampion] = useState<Champion | null>(null);
+  const [detailedChampion, setDetailedChampion] = useState<DetailedChampion | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -20,8 +25,24 @@ export function ChampionDetail() {
       try {
         setLoading(true);
         setError(null);
-        const data = await championService.getChampionById(championId);
-        setChampion(data);
+        
+        // Charger les données de base du champion
+        const basicData = await championService.getChampionById(championId);
+        if (basicData) {
+          setChampion(basicData);
+        }
+        
+        // Charger les données détaillées (stats + sorts)
+        try {
+          const detailedData = await championService.getDetailedChampionById(championId);
+          if (detailedData) {
+            setDetailedChampion(detailedData);
+          }
+        } catch (detailError) {
+          console.warn('Impossible de charger les détails du champion:', detailError);
+          // On continue avec les données de base seulement
+        }
+        
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Une erreur est survenue');
       } finally {
@@ -83,9 +104,19 @@ export function ChampionDetail() {
 
           {/* Champion Info */}
           <div className="text-center mb-8">
-            <h1 className="text-5xl md:text-7xl font-bold text-lol-gold mb-4 drop-shadow-2xl">
-              {champion.name}
-            </h1>
+            <div className="flex items-center justify-center gap-6 mb-4">
+              <img 
+                src={getChampionIconUrl(champion.id)}
+                alt={champion.name}
+                className="w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-lol-gold shadow-2xl"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+              <h1 className="text-5xl md:text-7xl font-bold text-lol-gold drop-shadow-2xl">
+                {champion.name}
+              </h1>
+            </div>
             <p className="text-2xl md:text-3xl text-lol-gold-light mb-6 drop-shadow-lg">
               {champion.title}
             </p>
@@ -100,6 +131,25 @@ export function ChampionDetail() {
               ))}
             </div>
           </div>
+
+          {/* Lore Section */}
+          {detailedChampion?.lore && (
+            <div className="max-w-4xl mx-auto mb-12">
+              <Card className="bg-lol-blue-dark/80 border-lol-gold/30">
+                <CardHeader>
+                  <CardTitle className="text-lol-gold flex items-center gap-2 text-lg md:text-xl">
+                    <BookOpen className="w-6 h-6 md:w-7 md:h-7" />
+                    Histoire de {champion.name}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-lol-gray-light text-sm md:text-base leading-relaxed text-justify">
+                    {detailedChampion.lore}
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          )}
 
           {/* Video Section */}
           {championTips?.videoId && (
@@ -125,6 +175,20 @@ export function ChampionDetail() {
                   </div>
                 </CardContent>
               </Card>
+            </div>
+          )}
+
+          {/* Stats et Sorts */}
+          {detailedChampion && (
+            <div className="max-w-6xl mx-auto mb-12 space-y-8">
+              {/* Statistiques - Sur toute la largeur */}
+              <ChampionStats stats={detailedChampion.stats} />
+              
+              {/* Sorts - Sur toute la largeur */}
+              <ChampionSpells 
+                spells={detailedChampion.spells} 
+                passive={detailedChampion.passive} 
+              />
             </div>
           )}
 
@@ -227,18 +291,22 @@ export function ChampionDetail() {
                     {championTips.stuff.core_items && (
                       <div>
                         <h4 className="text-lol-gold-light font-semibold mb-2">Items core</h4>
-                        <div className="flex flex-wrap gap-2 mb-2">
+                        <div className="flex flex-wrap gap-3 mb-2">
                           {championTips.stuff.core_items.map((item, index) => (
-                            <span 
+                            <ItemIcon 
                               key={index}
-                              className="px-3 py-1 bg-lol-gold/20 border border-lol-gold/40 rounded text-lol-gold-light text-sm"
-                            >
-                              {item}
-                            </span>
+                              itemName={item}
+                              size="lg"
+                              showName={false}
+                              className="bg-lol-gold/10 rounded p-1"
+                            />
                           ))}
                         </div>
                         {championTips.stuff.powerspike && (
-                          <p className="text-lol-gray-light text-sm italic">{championTips.stuff.powerspike}</p>
+                          <TipsTextWithItems 
+                            text={championTips.stuff.powerspike}
+                            className="text-lol-gray-light text-sm italic"
+                          />
                         )}
                       </div>
                     )}
@@ -246,20 +314,30 @@ export function ChampionDetail() {
                     {championTips.stuff.variante && (
                       <div>
                         <h4 className="text-lol-gold-light font-semibold mb-2">Variante</h4>
-                        <p className="text-lol-gray-light leading-relaxed">{championTips.stuff.variante}</p>
+                        <TipsTextWithItems 
+                          text={championTips.stuff.variante}
+                          className="text-lol-gray-light leading-relaxed"
+                        />
                       </div>
                     )}
 
                     {championTips.stuff.options_situationnelles && (
                       <div>
                         <h4 className="text-lol-gold-light font-semibold mb-3">Options situationnelles</h4>
-                        <div className="space-y-2">
+                        <div className="space-y-3">
                           {Object.entries(championTips.stuff.options_situationnelles).map(([item, description]) => (
-                            <div key={item} className="border-l-2 border-lol-gold/30 pl-4">
-                              <h5 className="text-lol-gold-light font-medium capitalize mb-1">
-                                {item.replace(/_/g, ' ')}
-                              </h5>
-                              <p className="text-lol-gray-light text-sm leading-relaxed">{description}</p>
+                            <div key={item} className="flex items-start gap-3 border-l-2 border-lol-gold/30 pl-4">
+                              <ItemIcon 
+                                itemName={item}
+                                size="md"
+                                className="flex-shrink-0 mt-1"
+                              />
+                              <div className="flex-1">
+                                <TipsTextWithItems
+                                  text={description}
+                                  className="text-lol-gray-light text-sm leading-relaxed"
+                                />
+                              </div>
                             </div>
                           ))}
                         </div>

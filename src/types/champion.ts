@@ -39,6 +39,39 @@ export interface ChampionStats {
   attackspeed: number;
 }
 
+export interface ChampionSpellImage {
+  full: string;
+  sprite: string;
+  group: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
+export interface ChampionSpell {
+  id: string;
+  name: string;
+  description: string;
+  tooltip: string;
+  maxrank: number;
+  cooldown: number[];
+  cooldownBurn: string;
+  cost: number[];
+  costBurn: string;
+  costType: string;
+  range: number[];
+  rangeBurn: string;
+  image: ChampionSpellImage;
+  resource: string;
+}
+
+export interface ChampionPassive {
+  name: string;
+  description: string;
+  image: ChampionSpellImage;
+}
+
 export interface Champion {
   version: string;
   id: string;
@@ -53,8 +86,20 @@ export interface Champion {
   stats: ChampionStats;
 }
 
+export interface DetailedChampion extends Champion {
+  lore: string;
+  spells: ChampionSpell[];
+  passive: ChampionPassive;
+}
+
 export interface ChampionData {
   data: Record<string, Champion>;
+  type: string;
+  version: string;
+}
+
+export interface DetailedChampionData {
+  data: Record<string, DetailedChampion>;
   type: string;
   version: string;
 }
@@ -66,9 +111,14 @@ export const API_CONFIG = {
   LANGUAGE: 'fr_FR',
   PATHS: {
     champions: '/data/{lang}/champion.json',
+    championDetail: '/data/{lang}/champion/{championId}.json',
     championIcon: '/img/champion/{championId}.png',
     championSplash: '/img/champion/splash/{championId}_{skinNum}.jpg',
-    championLoading: '/img/champion/loading/{championId}_{skinNum}.jpg'
+    championLoading: '/img/champion/loading/{championId}_{skinNum}.jpg',
+    spellIcon: '/img/spell/{spellId}.png',
+    passiveIcon: '/img/passive/{passiveId}.png',
+    items: '/data/{lang}/item.json',
+    itemIcon: '/img/item/{itemId}.png'
   }
 } as const;
 
@@ -96,4 +146,12 @@ export const getChampionSplashUrl = (championId: string, skinNum: number = 0) =>
     championId, 
     skinNum: skinNum.toString() 
   });
+};
+
+export const getSpellIconUrl = (spellImageFull: string) => {
+  return `${API_CONFIG.BASE_URL}/${API_CONFIG.VERSION}/img/spell/${spellImageFull}`;
+};
+
+export const getPassiveIconUrl = (passiveImageFull: string) => {
+  return `${API_CONFIG.BASE_URL}/${API_CONFIG.VERSION}/img/passive/${passiveImageFull}`;
 };

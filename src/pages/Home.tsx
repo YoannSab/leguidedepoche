@@ -1,17 +1,25 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Champion, ChampionData } from '@/types/champion';
 import { championService } from '@/services/championService';
-import { SearchBar } from '@/components/SearchBar';
 import { ChampionGrid } from '@/components/ChampionGrid';
 import logoLgdp from '@/assets/logo_lgdp.png';
 
 export function Home() {
     const navigate = useNavigate();
     const [champions, setChampions] = useState<Champion[]>([]);
-    const [filteredChampions, setFilteredChampions] = useState<Champion[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
+    // Liste des champions à afficher (ADC + exceptions)
+    const allowedChampions = [
+        // ADCs classiques
+        'Aphelios', 'Ashe', 'Caitlyn', 'Draven', 'Ezreal', 'Jhin', 'Jinx', 
+        'Kai\'Sa', 'Kalista', 'Kog\'Maw', 'Lucian', 'Miss Fortune', 'Samira', 
+        'Sivir', 'Senna', 'Tristana', 'Twitch', 'Varus', 'Vayne', 'Xayah', 'Zeri',
+        'Corki', 'Graves', 'Kindred', 'Quinn',
+        'Yasuo', 'Ziggs', 'Seraphine', 'Yunara'
+    ];
 
     // Chargement initial des champions
     useEffect(() => {
@@ -23,11 +31,15 @@ export function Home() {
                 const data: ChampionData = await championService.getChampions();
                 const championList = Object.values(data.data);
 
-                // Tri par nom
-                championList.sort((a, b) => a.name.localeCompare(b.name));
+                // Filtrer pour ne garder que les champions autorisés
+                const filteredList = championList.filter(champion => 
+                    allowedChampions.includes(champion.name)
+                );
 
-                setChampions(championList);
-                setFilteredChampions(championList);
+                // Tri par nom
+                filteredList.sort((a, b) => a.name.localeCompare(b.name));
+
+                setChampions(filteredList);
             } catch (err) {
                 setError(err instanceof Error ? err.message : 'Une erreur est survenue');
             } finally {
@@ -37,23 +49,6 @@ export function Home() {
 
         loadChampions();
     }, []);
-
-    // Fonction de recherche avec debounce
-    const handleSearch = useCallback(async (query: string) => {
-        if (!query.trim()) {
-            setFilteredChampions(champions);
-            return;
-        }
-
-        try {
-            const searchResults = await championService.searchChampions(query);
-            const championList = Object.values(searchResults.data);
-            championList.sort((a, b) => a.name.localeCompare(b.name));
-            setFilteredChampions(championList);
-        } catch (err) {
-            setError(err instanceof Error ? err.message : 'Une erreur est survenue lors de la recherche');
-        }
-    }, [champions]);
 
     // Gestion du clic sur un champion
     const handleChampionClick = (champion: Champion) => {
@@ -74,22 +69,14 @@ export function Home() {
 
                 {/* Sous-titre */}
                 <p className="text-lg sm:text-xl md:text-2xl text-lol-gray-light mb-4 mx-auto">
-                    Votre compagnon ultime pour maîtriser tous les champions de League of Legends
+                    Votre compagnon ultime pour maîtriser les ADC de League of Legends
                 </p>
-
-                {/* Barre de recherche */}
-                <div className="">
-                    <SearchBar
-                        onSearch={handleSearch}
-                        placeholder="Rechercher un champion par nom, titre ou rôle..."
-                    />
-                </div>
             </div>
 
             {/* Section principale avec la grille des champions */}
             <div className="container mx-auto px-10 pb-16 bg-blue">
                 <ChampionGrid
-                    champions={filteredChampions}
+                    champions={champions}
                     loading={loading}
                     error={error || undefined}
                     onChampionClick={handleChampionClick}

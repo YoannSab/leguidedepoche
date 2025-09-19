@@ -1,7 +1,8 @@
-import { ChampionData, buildApiUrl, API_CONFIG } from '@/types/champion';
+import { ChampionData, DetailedChampionData, DetailedChampion, buildApiUrl, API_CONFIG } from '@/types/champion';
 
 class ChampionService {
   private cache: ChampionData | null = null;
+  private detailedCache: Map<string, DetailedChampion> = new Map();
   private loading = false;
 
   /**
@@ -83,10 +84,45 @@ class ChampionService {
   }
 
   /**
+   * Obtient les détails complets d'un champion (stats + sorts + passif)
+   */
+  async getDetailedChampionById(championId: string): Promise<DetailedChampion | null> {
+    // Vérifier le cache d'abord
+    if (this.detailedCache.has(championId)) {
+      return this.detailedCache.get(championId)!;
+    }
+
+    try {
+      // Utiliser l'endpoint anglais pour les données détaillées
+      let url = buildApiUrl(API_CONFIG.PATHS.championDetail, { championId });      
+      
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+        throw new Error(`Erreur HTTP: ${response.status} ${response.statusText}`);
+      }
+
+      const data: DetailedChampionData = await response.json();
+      const championData = data.data[championId] || null;
+      
+      // Mettre en cache si les données existent
+      if (championData) {
+        this.detailedCache.set(championId, championData);
+      }
+      
+      return championData;
+    } catch (error) {
+      console.error(`Erreur lors de la récupération des détails du champion ${championId}:`, error);
+      throw new Error(`Impossible de récupérer les détails du champion ${championId}`);
+    }
+  }
+
+  /**
    * Vide le cache (utile pour forcer un rafraîchissement)
    */
   clearCache() {
     this.cache = null;
+    this.detailedCache.clear();
   }
 }
 

@@ -2,8 +2,8 @@ export default {
     "Aphelios": {
         "videoId": "nfWlot6h_JM",
         "specificites": {
-            "rotation_arme": "Le gameplay repose sur une rotation d’armes continue permettant de créer des synergies fortes tout au long de la partie.",
-            "obtenir_cycle": "On commence la partie avec l’arme rouge et verte. On vide d’abord la rouge, puis on vide toujours l’arme la plus ancienne jusqu’à retrouver la rouge. À ce moment-là, on vide de nouveau la rouge (au lieu de la blanche) et on continue toujours à vider l’arme la plus ancienne."
+            "rotation_d'_arme": "Le gameplay repose sur une rotation d’armes continue permettant de créer des synergies fortes tout au long de la partie.",
+            "obtenir_un_cycle": "On commence la partie avec l’arme rouge et verte. On vide d’abord la rouge, puis on vide toujours l’arme la plus ancienne jusqu’à retrouver la rouge. À ce moment-là, on vide de nouveau la rouge (au lieu de la blanche) et on continue toujours à vider l’arme la plus ancienne."
         },
         "competences": {
             "priorite_up": "Au niveau 1, 2 et 3 on monte le Z, puis on max le E, ensuite le Z et enfin le A.",
@@ -20,18 +20,18 @@ export default {
         },
         "stuff": {
             "core_items": [
-                "Collector",
-                "Infinity Edge",
-                "Dominik"
+                "226676",
+                "3031",
+                "3036"
             ],
             "powerspike": "Après ces trois items, fort power spike.",
-            "variante": "Commencer par une Dague dentelée puis finir Infinity Edge et Dominik avant de faire Collector.",
+            "variante": "Commencer par 3134 puis finir 3031 et 3036 avant de faire 226676.",
             "options_situationnelles": {
-                "shieldbow": "Si des assassins sont en face.",
-                "runnan": "S’il y a beaucoup de mêlés.",
-                "bloodthirster": "Contre des compositions poke.",
-                "guardian_angel": "Contre des assassins.",
-                "qss": "Pour contrer les contrôles (Cleanse/CC)."
+                "226673": "Si des assassins sont en face.",
+                "223085": "S’il y a beaucoup de mêlés.",
+                "223072": "Contre des compositions poke.",
+                "3026": "Contre des assassins.",
+                "3140": "Pour contrer les contrôles (Cleanse/CC)."
             }
         }
     }

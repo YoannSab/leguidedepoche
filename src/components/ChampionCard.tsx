@@ -67,8 +67,8 @@ export function ChampionCard({ champion, onClick, hasTips = false }: ChampionCar
             
             {/* Badge pour indiquer si des tips sont disponibles */}
             {hasTips && (
-              <div className="absolute top-2 right-2 bg-lol-gold text-lol-blue-dark text-xs px-2 py-1 rounded-full font-semibold">
-                Guide
+              <div className="hidden sm:block absolute top-2 right-2 bg-lol-gold text-lol-blue-dark text-xs px-2 py-1 rounded-full font-semibold">
+              Guide
               </div>
             )}
           </div>
