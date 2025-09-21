@@ -11,6 +11,7 @@ import { TipsTextWithItems } from '@/components/TipsTextWithItems';
 import { StickyVideo } from '@/components/StickyVideo';
 import { ArrowLeft, Star, Shield, Sword, Target, BookOpen } from 'lucide-react';
 import tips from '@/data/tips';
+import { RuneIcon } from '@/components/RuneIcon';
 
 export function ChampionDetail() {
   const { championId } = useParams<{ championId: string }>();
@@ -236,21 +237,29 @@ export function ChampionDetail() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     {championTips.runes.par_defaut && (
-                      <div>
-                        <h4 className="text-lol-gold-light font-semibold mb-2">Recommandée par défaut</h4>
-                        <p className="text-lol-gold font-medium">{championTips.runes.par_defaut}</p>
+                      <div className='flex items-center gap-3 border-l-2 border-lol-gold/30 pl-4'>
+                        <h4 className="text-lol-gold-light font-semibold">Recommandée par défaut : </h4>
+                        <RuneIcon 
+                          runeId={championTips.runes.par_defaut}
+                          className="text-lol-gold font-medium"
+                        />
                       </div>
                     )}
                     {championTips.runes.options && (
                       <div>
-                        <h4 className="text-lol-gold-light font-semibold mb-3">Options situationnelles</h4>
+                        <h4 className="text-lol-gold-light font-semibold mb-3">Options</h4>
                         <div className="space-y-3">
                           {Object.entries(championTips.runes.options).map(([rune, description]) => (
-                            <div key={rune} className="border-l-2 border-lol-gold/30 pl-4">
-                              <h5 className="text-lol-gold-light font-medium capitalize mb-1">
-                                {rune.replace(/_/g, ' ')}
-                              </h5>
-                              <p className="text-lol-gray-light text-sm leading-relaxed">{description}</p>
+                            <div key={rune} className="flex items-center gap-3 border-l-2 border-lol-gold/30 pl-4">
+                                <RuneIcon 
+                                  runeId={rune}
+                                  size='lg'
+                                  className='flex-shrink-0'
+                                />
+                              <TipsTextWithItems 
+                                text={description}
+                                className="text-lol-gray-light text-sm leading-relaxed"
+                              />
                             </div>
                           ))}
                         </div>
@@ -308,11 +317,11 @@ export function ChampionDetail() {
                         <h4 className="text-lol-gold-light font-semibold mb-3">Options situationnelles</h4>
                         <div className="space-y-3">
                           {Object.entries(championTips.stuff.options_situationnelles).map(([item, description]) => (
-                            <div key={item} className="flex items-start gap-3 border-l-2 border-lol-gold/30 pl-4">
+                            <div key={item} className="flex items-center gap-3 border-l-2 border-lol-gold/30 pl-4">
                               <ItemIcon 
                                 itemName={item}
                                 size="md"
-                                className="flex-shrink-0 mt-1"
+                                className="flex-shrink-0"
                               />
                               <div className="flex-1">
                                 <TipsTextWithItems

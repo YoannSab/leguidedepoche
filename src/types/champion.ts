@@ -118,7 +118,9 @@ export const API_CONFIG = {
     spellIcon: '/img/spell/{spellId}.png',
     passiveIcon: '/img/passive/{passiveId}.png',
     items: '/data/{lang}/item.json',
-    itemIcon: '/img/item/{itemId}.png'
+    itemIcon: '/img/item/{itemId}.png',
+    runes: '/data/{lang}/runesReforged.json',
+    runeIcon: '/img/{iconPath}'
   }
 } as const;
 
@@ -154,4 +156,8 @@ export const getSpellIconUrl = (spellImageFull: string) => {
 
 export const getPassiveIconUrl = (passiveImageFull: string) => {
   return `${API_CONFIG.BASE_URL}/${API_CONFIG.VERSION}/img/passive/${passiveImageFull}`;
+};
+
+export const getRuneIconUrl = (iconPath: string) => {
+  return `${API_CONFIG.BASE_URL}/img/${iconPath}`
 };

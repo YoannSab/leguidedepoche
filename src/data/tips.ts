@@ -11,12 +11,12 @@ export default {
         },
         "runes": {
             "options": {
-                "fleet_footwork": "Contre des lanes à distance ou avec beaucoup de poke, où il faut esquiver.",
-                "press_the_attack": "Recommandé par défaut. Idéal avec un support mêlé car permet d’enchaîner des combos très rapidement.",
-                "conqueror": "Quand l’équipe ennemie comporte beaucoup de mêlés.",
-                "lethal_tempo": "À utiliser au feeling selon les situations."
+                "8021": "Contre des lanes à distance ou avec beaucoup de poke, où il faut esquiver.",
+                "8005": "Idéal avec un support mêlé car permet d’enchaîner des combos très rapidement.",
+                "8010": "Quand l’équipe ennemie comporte beaucoup de mêlés.",
+                "8008": "À utiliser au feeling selon les situations. "
             },
-            "par_defaut": "Press the Attack"
+            "par_defaut": "8005"
         },
         "stuff": {
             "core_items": [
