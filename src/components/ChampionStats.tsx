@@ -1,6 +1,6 @@
 import { ChampionStats as StatsType } from '@/types/champion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Heart, Shield, Sword, Zap, Activity, Target } from 'lucide-react';
+import { Heart, Shield, Sword, Zap, Activity, RulerDimensionLine } from 'lucide-react';
 
 interface ChampionStatsProps {
   stats: StatsType;
@@ -44,7 +44,7 @@ export function ChampionStats({ stats }: ChampionStatsProps) {
       color: 'text-purple-400'
     },
     {
-      icon: Target,
+      icon: RulerDimensionLine,
       label: 'Portée d\'attaque',
       value: Math.round(stats.attackrange),
       perLevel: '',

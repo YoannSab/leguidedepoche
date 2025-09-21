@@ -1,6 +1,6 @@
 import { ChampionSpell, ChampionPassive, getSpellIconUrl, getPassiveIconUrl } from '@/types/champion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Clock, Coins, Zap } from 'lucide-react';
+import { Clock, Coins, Zap, RulerDimensionLine } from 'lucide-react';
 
 interface ChampionSpellsProps {
   spells: ChampionSpell[];
@@ -84,24 +84,26 @@ export function ChampionSpells({ spells, passive }: ChampionSpellsProps) {
                   <h4 className="text-lol-gold font-semibold text-base md:text-lg truncate">{spell.name}</h4>
                 </div>
                 
-                <div className="flex items-center gap-3 text-sm md:text-base mb-3">
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm md:text-base mb-3">
                   {/* Cooldown */}
                   <div className="flex items-center gap-1 text-blue-400">
-                    <Clock className="w-4 h-4" />
-                    <span>{spell.cooldownBurn}s</span>
+                  <Clock className="w-4 h-4" />
+                  <span>{spell.cooldownBurn}s</span>
                   </div>
                   
                   {/* Coût */}
                   <div className="flex items-center gap-1 text-purple-400">
-                    <Coins className="w-4 h-4" />
-                    <span>{formatCost(spell)}</span>
+                  <Coins className="w-4 h-4" />
+                  <span>{formatCost(spell)}</span>
                   </div>
                   
                   {/* Portée si pertinente */}
-                  {spell.range && spell.range[0] < 25000 && (
-                    <div className="text-green-400">
-                      {spell.rangeBurn}
-                    </div>
+                  {spell.range && (
+                    
+                  <div className="flex items-center gap-1 text-green-400">
+                  <RulerDimensionLine className="w-4 h-4" />
+                   <span>{spell.rangeBurn}</span>
+                  </div>
                   )}
                 </div>
                 
