@@ -8,7 +8,8 @@ import { ChampionStats } from '@/components/ChampionStats';
 import { ChampionSpells } from '@/components/ChampionSpells';
 import { ItemIcon } from '@/components/ItemIcon';
 import { TipsTextWithItems } from '@/components/TipsTextWithItems';
-import { ArrowLeft, Play, Star, Shield, Sword, Target, BookOpen } from 'lucide-react';
+import { StickyVideo } from '@/components/StickyVideo';
+import { ArrowLeft, Star, Shield, Sword, Target, BookOpen } from 'lucide-react';
 import tips from '@/data/tips';
 
 export function ChampionDetail() {
@@ -153,29 +154,10 @@ export function ChampionDetail() {
 
           {/* Video Section */}
           {championTips?.videoId && (
-            <div className="max-w-md mx-auto mb-12">
-              <Card className="bg-lol-blue-dark/80 border-lol-gold/30">
-                <CardHeader>
-                  <CardTitle className="text-lol-gold flex items-center gap-2">
-                    <Play className="w-5 h-5" />
-                    Guide Vidéo
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="aspect-video rounded-lg overflow-hidden">
-                    <iframe
-                      width="100%"
-                      height="100%"
-                      src={`https://www.youtube.com/embed/${championTips.videoId}`}
-                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      title={`Guide ${champion.name}`}
-                      className="w-full h-full"
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+            <StickyVideo 
+              videoId={championTips.videoId}
+              championName={champion.name}
+            />
           )}
 
           {/* Stats et Sorts */}
@@ -291,7 +273,7 @@ export function ChampionDetail() {
                     {championTips.stuff.core_items && (
                       <div>
                         <h4 className="text-lol-gold-light font-semibold mb-2">Items core</h4>
-                        <div className="flex flex-wrap gap-3 mb-2">
+                        <div className="flex flex-wrap gap-2 md:gap-3 mb-2">
                           {championTips.stuff.core_items.map((item, index) => (
                             <ItemIcon 
                               key={index}

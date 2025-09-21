@@ -12,11 +12,13 @@ interface ItemIconProps {
 export function ItemIcon({ itemName, size = 'md', showName = false, className = '' }: ItemIconProps) {
   const [item, setItem] = useState<{ id: string; name: string } | null>(null);
   const [loading, setLoading] = useState(true);
+  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
     const loadItem = async () => {
       try {
         setLoading(true);
+        setImageError(false); // Réinitialiser l'état d'erreur
         
         // Vérifier si itemName est un ID numérique
         const isNumericId = /^\d{3,6}$/.test(itemName);
@@ -51,9 +53,9 @@ export function ItemIcon({ itemName, size = 'md', showName = false, className = 
   }, [itemName]);
 
   const sizeClasses = {
-    sm: 'w-8 h-8',
-    md: 'w-12 h-12',
-    lg: 'w-16 h-16'
+    sm: 'w-6 h-6 md:w-8 md:h-8',
+    md: 'w-8 h-8 md:w-12 md:h-12',
+    lg: 'w-12 h-12 md:w-16 md:h-16'
   };
 
   const textSizeClasses = {
@@ -80,15 +82,22 @@ export function ItemIcon({ itemName, size = 'md', showName = false, className = 
       className={`inline-flex items-center ${className}`}
       title={item.name}
     >
-      <img
-        src={getItemIconUrl(item.id)}
-        alt={item.name}
-        className={`${sizeClasses[size]} rounded border border-lol-gold/30 bg-lol-blue-dark/20 hover:border-lol-gold transition-colors`}
-        onError={(e) => {
-          // Fallback en cas d'erreur de chargement d'image
-          e.currentTarget.style.display = 'none';
-        }}
-      />
+      {!imageError ? (
+        <img
+          src={getItemIconUrl(item.id)}
+          alt={item.name}
+          className={`${sizeClasses[size]} rounded border border-lol-gold/30 bg-lol-blue-dark/20 hover:border-lol-gold transition-colors`}
+          onError={() => {
+            setImageError(true);
+          }}
+        />
+      ) : (
+        <div className={`${sizeClasses[size]} rounded border border-lol-gold/30 bg-lol-blue-dark/20 hover:border-lol-gold transition-colors flex items-center justify-center`}>
+          <span className={`${textSizeClasses[size]} text-lol-gold-light text-center px-1 truncate`}>
+            {item.name}
+          </span>
+        </div>
+      )}
       {showName && (
         <span className={`${textSizeClasses[size]} text-lol-gold-light ml-2`}>
           {item.name}

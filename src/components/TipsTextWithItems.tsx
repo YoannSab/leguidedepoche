@@ -28,7 +28,7 @@ export function TipsTextWithItems({ text, className = '' }: TipsTextWithItemsPro
         <ItemIcon 
           key={`item-${partIndex}-${itemId}`}
           itemName={itemId}
-          size="md"
+          size="sm"
           className="inline-block mx-1 align-middle"
         />
       );

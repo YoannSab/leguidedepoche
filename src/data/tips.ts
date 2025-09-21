@@ -1,6 +1,6 @@
 export default {
     "Aphelios": {
-        "videoId": "nfWlot6h_JM",
+        "videoId": "OcP8WZPKcDo",
         "specificites": {
             "rotation_d'_arme": "Le gameplay repose sur une rotation d’armes continue permettant de créer des synergies fortes tout au long de la partie.",
             "obtenir_un_cycle": "On commence la partie avec l’arme rouge et verte. On vide d’abord la rouge, puis on vide toujours l’arme la plus ancienne jusqu’à retrouver la rouge. À ce moment-là, on vide de nouveau la rouge (au lieu de la blanche) et on continue toujours à vider l’arme la plus ancienne."
