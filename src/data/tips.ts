@@ -27,11 +27,11 @@ export default {
             "powerspike": "Après ces trois items, fort power spike.",
             "variante": "Commencer par 3134 puis finir 3031 et 3036 avant de faire 226676.",
             "options_situationnelles": {
-                "226673": "Si des assassins sont en face.",
+                "226673": "Contre des assassins.",
                 "223085": "S’il y a beaucoup de mêlés.",
                 "223072": "Contre des compositions poke.",
                 "3026": "Contre des assassins.",
-                "3140": "Pour contrer les contrôles (Cleanse/CC)."
+                "223139": "Pour contrer les contrôles (Cleanse/CC)."
             }
         }
     }
