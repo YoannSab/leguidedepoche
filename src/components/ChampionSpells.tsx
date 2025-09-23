@@ -106,8 +106,10 @@ export function ChampionSpells({ spells, passive }: ChampionSpellsProps) {
                   </div>
                   )}
                 </div>
-                
-                <p className="text-lol-gray-light text-sm md:text-lg leading-relaxed line-clamp-3">
+
+                <p
+                  className="text-lol-gray-light text-sm md:text-lg leading-relaxed"
+                >
                   {cleanTooltip(spell.description)}
                 </p>
               </div>
